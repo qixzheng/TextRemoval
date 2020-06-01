@@ -7,12 +7,15 @@ from torch.utils.data import Dataset, DataLoader
 import numpy as np
 
 import os
+from sys import platform
 from string import ascii_letters
 import random
 from PIL import Image, ImageFont, ImageDraw, ImageFilter
 
-
-serif = ['/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf', '/usr/share/fonts/wenquanyi/wqy-microhei/wqy-microhei.ttc']
+if platform == 'linux':
+    serif = ['/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf', '/usr/share/fonts/wenquanyi/wqy-microhei/wqy-microhei.ttc']
+else:
+    serif = ['simhei.ttf', 'simhei.ttf']
 
 
 def load_datasets(root_dir, redux, batch_size, param, crop_size, shuffled=False, single=False):
@@ -122,13 +125,13 @@ class NoiseDataset(AbstractDataset):
                 font = ImageFont.truetype(serif[1], np.random.randint(8, 90))
                 length = np.random.randint(10, 25)
                 chars = ''.join(chr(random.randint(0x4E00, 0x9FBF)) for i in range(length))
-            #is_color = random.randint(0,2)
-            #if is_color == 0:
-            color = tuple(np.random.randint(0, 1, c))
-            #elif is_color == 2:
-            #    color = tuple(np.random.randint(255, 256, c))
-            #else:
-            #    color = tuple(np.random.randint(0, 255, c))
+            is_color = random.randint(0,2)
+            if is_color == 0:
+                color = tuple(np.random.randint(0, 1, c))
+            elif is_color == 2:
+                color = tuple(np.random.randint(255, 256, c))
+            else:
+                color = tuple(np.random.randint(0, 255, c))
             pos = (np.random.randint(0, w), np.random.randint(0, h))
             text_draw.text(pos, chars, color, font=font)
 

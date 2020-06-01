@@ -6,11 +6,15 @@ from torch.utils.data import Dataset, DataLoader
 import numpy as np
 
 import os
+from sys import platform
 from string import ascii_letters
 import random
 from PIL import Image, ImageFont, ImageDraw
 
-serif = ['/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf', '/usr/share/fonts/wenquanyi/wqy-microhei/wqy-microhei.ttc']
+if platform == 'linux':
+    serif = ['/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf', '/usr/share/fonts/wenquanyi/wqy-microhei/wqy-microhei.ttc']
+else:
+    serif = ['simhei.ttf', 'simhei.ttf']
 def add_text(source, noise_param):
     img = Image.open(source).convert('RGB')
     c = len(img.getbands())
