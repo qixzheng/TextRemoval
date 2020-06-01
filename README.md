@@ -25,4 +25,9 @@ python train.py -e 100 --cuda
 ```
 python test.py -h
 ```
-如需要添加文字水印，可以添加参数`--add-text`。程序执行完毕后，会显示图像并将其保存在`./test_save`目录下。
+如需要添加文字水印，可以添加参数`--add-text`；通过`--noise-param`确定添加文本覆盖范围。程序执行完毕后，会显示图像并将其保存在指定目录下（默认`./test_save`）。如果需要对图片预处理，需要指定图片放缩大小。目前只支持单张图片处理，且模型测试暂不支持cuda加速。
+示例：
+
+```
+python test.py --add-text --noise-param 0.25 --imge-name noise.png --pre-set 2
+```
